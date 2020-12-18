@@ -10,24 +10,17 @@ export default function Row({ title, fetchURL,isLargeRow}) {
   const [open,setOpen]=useState(false)
   const [trailerUrl, setTrailerUrl] = useState('');
 
-   const handleOpen = () => {
-     setOpen(true);
-   };
-
    const handleClose = () => {
      setOpen(false);
    };
-
   const base_url = "https://image.tmdb.org/t/p/original/";
   useEffect(() => {
     (async function () {
       let res = await axios.get(fetchURL);
-      // console.log(res);
       setMovies(res.data.results);
       return res;
     })();
   }, [fetchURL]);
-  console.log("movies", movies);
 const opts={
   height:"390",
   width:"100%",
@@ -36,9 +29,6 @@ const opts={
   }
 }
 const handleGetTrailer=(movie)=>{
-  // if(trailerUrl){
-    // setTrailerUrl("")
-  // }else{
     movieTrailer(movie?.name||"")
     .then(url=>{
       const urlParams=new URLSearchParams(new URL(url).search)
@@ -49,9 +39,7 @@ const handleGetTrailer=(movie)=>{
       console.log('error ',err.message);
       setErrorMessage(err.message)
       setOpen(oldVal=>!oldVal)
-      // handleOpen()
     })
-  // }
 }
   return (
     <div className="row">
